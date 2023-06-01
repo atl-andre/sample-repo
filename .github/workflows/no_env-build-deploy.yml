@@ -1,4 +1,4 @@
-name: deploy-pipeline
+name: deploy-pipeline-test
 on:
   workflow_dispatch:
 
@@ -12,7 +12,21 @@ jobs:
 
   deploy-dev:
     runs-on: ubuntu-latest
+    environment:
+      name: Development
+      url: "https://atlassian.com"
     needs: build
     steps:
       - name: Run a one-line script
         run: echo deploy dev
+
+
+  deploy-prd:
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: "https://atlassian.com"
+    needs: deploy-dev
+    steps:
+      - name: Run a one-line script
+        run: echo deploy prd
